@@ -13,7 +13,7 @@ class BufferedChannel {
     if(closed){
       throw std::runtime_error("Channel is closed");
     }
-    if(!closed&&capacity==queBue_.size()){
+    if(!closed&&capacity==queue_.size()){
       sending.wait(lock,[&](){return queue_.size()<capacity||closed;});
     }
     queue_.push(value);
@@ -36,7 +36,7 @@ class BufferedChannel {
 
   void Close() {
     closed=true;
-    sending.notify_all();A
+    sending.notify_all();
     receiving.notify_all();
   }
  private:
